@@ -1,27 +1,43 @@
 \documentclass{beamer}
-\usepackage{ru}
-\usepackage{amsmath}
-\usepackage{minted}
-\usepackage{hyperref}
-\usepackage{svg}
-\usepackage{graphicx}
-\usepackage{multicol}
 \usepackage[T1]{fontenc}
-
+\usepackage[utf8]{inputenc}
+\usepackage{ru}
 
 \author{Steven Bronsveld \and Jelmer Firet}
 \title{Scalar Actions in Lean}
 \subtitle{Type Theory and Coq 2021}
-\date{}
 
 \institute[Radboud University Nijmegen]{Radboud University Nijmegen}
 
-\setminted{autogobble,tabsize=4,fontsize=\scriptsize}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{upgreek}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{lstautogobble}
+
+\definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
+\definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
+\definecolor{symbolcolor}{rgb}{0.0, 0.1, 0.6}    % blue
+\definecolor{sortcolor}{rgb}{0.1, 0.5, 0.1}      % green
+\definecolor{errorcolor}{rgb}{1, 0, 0}           % bright red
+\definecolor{stringcolor}{rgb}{0.5, 0.3, 0.2}    % brown
+
+\def\lstlanguagefiles{lstlean.tex}
+\lstset{language=lean, basicstyle=\footnotesize, numbers=left, autogobble=true}
 
 \begin{document}
 	\begin{frame}[t]
 	\titlepage
 	\end{frame}
 
-	
+	\begin{frame}[t]
+	\frametitle{Slide 1}
+		
+	\end{frame}
+
+	\begin{frame}[t, fragile]
+	\frametitle{Lean Code}
+		\lstinputlisting[lastline=20]{../scalar_actions.lean}
+	\end{frame}
 \end{document}
