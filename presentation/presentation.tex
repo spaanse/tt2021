@@ -4,8 +4,8 @@
 \usepackage{ru}
 
 \author{Steven Bronsveld \and Jelmer Firet}
-\title{Scalar Actions in Lean}
-\subtitle{Type Theory and Coq 2021}
+\title[Scalar Actions]{Scalar Actions in Lean's Mathlib}
+\subtitle{Based on a paper by Eric Wieser\cite{wieserScalarActionsLean2021}}
 
 \institute[Radboud University Nijmegen]{Radboud University Nijmegen}
 
@@ -26,6 +26,9 @@
 \def\lstlanguagefiles{lstlean.tex}
 \lstset{language=lean, basicstyle=\footnotesize, numbers=left, autogobble=true}
 
+\usepackage[style=numeric]{biblatex}
+\addbibresource{bibliography.bib}
+
 \begin{document}
 	\begin{frame}[t]
 	\titlepage
@@ -36,8 +39,8 @@
 		
 	\end{frame}
 
-	\begin{frame}[t, fragile]
-	\frametitle{Lean Code}
-		\lstinputlisting[lastline=20]{../scalar_actions.lean}
+	\begin{frame}[t]
+	\frametitle{Bibliography}
+		\printbibliography
 	\end{frame}
 \end{document}
