@@ -2,6 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{ru}
+\setbeamercovered{transparent}
 
 \author{Steven Bronsveld \and Jelmer Firet}
 \title[Scalar Actions]{Scalar Actions in Lean's Mathlib}
@@ -95,9 +96,65 @@
 			mul\_semiring\_action	&\yes	&\yes	&\no	&\yes	&\yes	&\yes	&\no	&\no	&\yes	&\yes	&\\
 		\end{tabular}
 	\end{frame}
+
+	\begin{frame}[t, fragile]
+	\frametitle{has\_scalar}
+		\begin{block}{Structure (\texttt{algebra.group.defs})}
+			\begin{lstlisting}
+			class has_scalar (M : Type*) (α : Type*) :=
+			(smul : M → α → α)
+			infixr ` • `:73 := has_scalar.smul
+			\end{lstlisting}
+		\end{block}
+
+		\begin{block}{Instance (\texttt{group\_theory.group\_action.defs})}
+			\begin{onlyenv}<1>
+			\begin{lstlisting}
+				instance has_mul.to_has_scalar (α : Type*) [has_mul α]
+				: has_scalar α α := ⟨(*)⟩
+			\end{lstlisting}
+			\end{onlyenv}
+
+			\begin{onlyenv}<2>
+			\begin{lstlisting}
+				instance has_mul.to_has_scalar (α : Type*) [has_mul α]
+				: has_scalar α α := { smul := mul }
+			\end{lstlisting}
+			\end{onlyenv}
+		\end{block}
+	\end{frame}
+
+	\begin{frame}[t, fragile]
+	\frametitle{function.has\_scalar}
+		\begin{block}{Instance}
+			\begin{lstlisting}
+				instance function.has_scalar (I α : Type*) [has_mul α]
+				: has_scalar α (I → α) := { smul := λ r v, (λ i, r * v i)}
+			\end{lstlisting}
+		\end{block}
+		\pause
+		What about \lstinline{has_scalar M (I → κ → α)}?
+		\pause
+		\begin{block}{Instance}
+			\begin{lstlisting}
+				instance function.has_scalar (I M α : Type*) [has_scalar M α]
+				: has_scalar M (I → α) := { smul := λ r v, (λ i, r • v i) }
+			\end{lstlisting}
+		\end{block}
+		\pause
+		What about \lstinline{has_scalar M (Π i : I, f i)}?
+		\pause
+		\begin{block}{Instance (\texttt{group\_theory.group\_action.pi)}}
+			\begin{lstlisting}
+				instance pi.has_scalar (...) [Π i, has_scalar M (f i)]
+				: has_scalar M (Π i : I, f i) := { smul := λ r v, (λ i, r • v i) }
+			\end{lstlisting}
+		\end{block}
+	\end{frame}
 	% section structures (end)
 
-
+	\section{}
+	\renewcommand{\section}[2]{}
 	\begin{frame}[t]
 	\frametitle{Bibliography}
 		\printbibliography
