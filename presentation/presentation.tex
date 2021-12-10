@@ -70,8 +70,30 @@
 	\end{frame}
 	
 	\begin{frame}[t]
-	\frametitle{Slide 1}
-		
+	\frametitle{Overview of structures with scalar multiplication}
+		\begin{tabular}{l*{11}{@{}c}}
+			structure &
+				\rot[50][1.4em]{$r\bullet m$} &
+				\rot[50][1.4em]{$r\bullet 0_M=0_M$} &
+				\rot[50][1.4em]{$0_R\bullet m=0_M$} &
+				\rot[50][1.4em]{$1_R\bullet m=m$} &
+				\rot[50][1.4em]{$(r\cdot s)\bullet m=r\bullet (s\bullet m)$} &
+				\rot[50][1.4em]{$r\bullet(m+n)=r\bullet m+r\bullet n$} &
+				\rot[50][1.4em]{$(r+s)\bullet m=r\bullet m+s\bullet m$} &
+				\rot[50][1.4em]{$r\bullet m=r_M\cdot m=m\cdot r_M$} &
+				\rot[50][1.4em]{$r\bullet (m\cdot n)=(r\bullet m)\cdot(r\bullet n)$} &
+				\rot[50][1.4em]{$r\bullet 1_M=1_M$} &
+				\\
+			\hline
+			has\_scalar				&\yes	&\no	&\no	&\no	&\no	&\no	&\no	&\no	&\no	&\no	&\\
+			smul\_with\_zero		&\yes	&\yes	&\yes	&\no	&\no	&\no	&\no	&\no	&\no	&\no	&\\
+			mul\_action				&\yes	&\no	&\no	&\yes	&\yes	&\no	&\no	&\no	&\no	&\no	&\\
+			mul\_action\_with\_zero	&\yes	&\yes	&\yes	&\yes	&\yes	&\no	&\no	&\no	&\no	&\no	&\\
+			distrib\_mul\_action	&\yes	&\yes	&\no	&\yes	&\yes	&\yes	&\no	&\no	&\no	&\no	&\\
+			module					&\yes	&\yes	&\yes	&\yes	&\yes	&\yes	&\yes	&\no	&\no	&\no	&\\
+			algebra					&\yes	&\yes	&\yes	&\yes	&\yes	&\yes	&\yes	&\yes	&\no	&\no	&\\
+			mul\_semiring\_action	&\yes	&\yes	&\no	&\yes	&\yes	&\yes	&\no	&\no	&\yes	&\yes	&\\
+		\end{tabular}
 	\end{frame}
 	% section structures (end)
 
