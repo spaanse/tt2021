@@ -1,9 +1,7 @@
 import algebra
 import algebra.algebra.basic
-
+import data.nat.basic
 #print has_scalar
-
-
 
 instance int.has_scalar : has_scalar ℕ ℕ := {
   smul := λ n m, n * m,
@@ -16,6 +14,7 @@ class sj_has_mul (G : Type*) :=
 (sj_mul : G → G → G)
 
 infix * := sj_has_mul.sj_mul
+
 
 class sj_semigroup (G : Type*) extends sj_has_mul G :=
 (sj_mul_assoc : ∀ a b c : G, a * b * c = a * (b * c))
@@ -34,42 +33,63 @@ instance (T : Type*) [sj_semigroup T] : sj_semigroup (sj_opposite T) :=
 
 -- 1.2 the has_scalar typeclass
 class sj_has_scalar (M : Type*) (α : Type*) := (sj_smul : M → α → α)
+
 infixr ` • `:73 := sj_has_scalar.sj_smul
+
 class sj_mul_action (M : Type*) (α : Type*) [monoid M] extends sj_has_scalar M α :=
 (sj_one_smul : ∀ a : α, (1 : M) • a = a)
 (sj_mul_smul : ∀ (x y : M) (a : α), (x * y) • a = x • y • a)
 
 -- 2.1 left multiplication
 
-instance sj_has_mul.to_has_scalar (α : Type*) [sj_has_mul α] : sj_has_scalar α α := { sj_smul := (*) }
+instance sj_has_mul.to_has_scalar (α : Type*) [sj_has_mul α] : sj_has_scalar α α := { 
+  sj_smul := λ (a: α) (b: α), a * b 
+}
 
 -- 2.2 
+def apply_n {α : Type*} [add_comm_monoid α] : ℕ → (α → α → α) → α → α
+| 0     f x := 0
+| (k+1) f x := f (apply_n k f x) x
+
+instance sj_repeated_add.to_has_scalar (α : Type*) [add_comm_monoid α] [module ℤ α] : sj_has_scalar ℕ α := {
+  sj_smul := λ (n: ℕ) (x: α), apply_n n has_add.add x
+}
 
 -- 3
 
-variables R M N I α : Type*
+variables R M N I J α : Type*
 
 instance sj_function.has_scalar [has_mul α] : has_scalar α (I → α) := {
   smul := λ r v, (λ i, r * v i)
 }
 
-instance sj_function.has_scalar' [has_scalar M α] : has_scalar M (I → α) := {
+instance sj_matrix.has_scalar [has_mul α] : has_scalar α (I → J → α) := {
+  smul := λ r v, (λ i j, r * v i j)
+}
+
+instance sj_matrix.has_scalar' [has_mul α] [has_scalar α (J → α)] : has_scalar α (I → (J → α)) := {
+  smul := λ r v, (λ i j, r * v i j)
+}
+
+instance sj_function.has_scalar' [has_scalar α M] : has_scalar α (I → M) := {
   smul := λ r v, (λ i, r • v i)
 }
 
-instance sj_pi.has_scalar (f : I → Type*) [Π i : I, has_scalar M (f i)] : has_scalar M (Π i : I, f i) := {
+instance sj_pi.has_scalar (f : I → Type*) [Π i : I, has_scalar α (f i)] : has_scalar α (Π i : I, f i) := {
   smul := λ r v, (λ i, r • v i)
 }
 
 -- 3.1
 instance addmap.has_scalar [has_scalar R N] [add_zero_class M] [add_zero_class N] : has_scalar R (M →+ N) := {
-  smul := λ r v, {
-    to_fun := λ i, r • v i,
+  smul := λ r f, {
+    to_fun := λ i, r • f i,
     map_zero' := by {
-      simp, admit,
+      simp, 
+      sorry,
     },
     map_add' := by {
-      simp, admit,
+      simp, 
+      sorry,
     },
   }
 }
@@ -87,13 +107,17 @@ instance addmap.distrib_mul_action [monoid R] [add_monoid M] [add_comm_monoid N]
   smul_zero := λ r,add_monoid_hom.ext (λ x, by simp [smul_zero]),
 }
 
+
 section linmap_has_scalar
 
 variables [add_comm_monoid M] [add_comm_monoid N]
-instance linmap.has_scalar₁ [semiring R] [module R M] [module R N] [has_scalar α N] : has_scalar α (M →ₗ[R] N) := {
+instance linmap.has_scalar₁ 
+[semiring R] [module R M] [module R N] [has_scalar α N] : 
+has_scalar α (M →ₗ[R] N) := {
   smul := λ a f, {
     to_fun := λ m, a • f m,
-    map_add' := by {intros m₁ m₂, 
+    map_add' := by {
+      intros m₁ m₂, 
       rw f.map_add,
       sorry,
     },
@@ -169,5 +193,9 @@ instance linmap.has_scalar₅ [semiring R] [module R M] [module R N] [monoid α]
 }
 end linmap_has_scalar
 
+
+section algrebras
+
+end algrebras
 
 end scalar
