@@ -1,6 +1,5 @@
 import algebra
 import algebra.algebra.basic
-import data.nat.basic
 #print has_scalar
 
 instance int.has_scalar : has_scalar ℕ ℕ := {
